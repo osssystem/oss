@@ -49,6 +49,3 @@ crashlytics.properties
 crashlytics-build.properties
 
 /bower_components/*
-__pycache__/
-*.py[cod]
-*$py.class
