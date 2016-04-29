@@ -3,11 +3,11 @@ from __future__ import unicode_literals
 from django.db import models
 
 class User(models.Model):
-    name = models.CharField()
-    surname = models.CharField()
-    email = models.EmailField()
+    name = models.CharField(max_length=30)
+    surname = models.CharField(max_length=30)
+    email = models.EmailField(max_length=40)
     password = models.PasswordField()
-    login_name = models.CharField()
+    login_name = models.CharField(max_length=30)
 
 
 class UserSkill(models.Model):
@@ -17,8 +17,8 @@ class UserSkill(models.Model):
 
 
 class Project(models.Model):
-    name = models.CharField()
-    url = models.CharField()
+    name = models.CharField(max_length=30)
+    url = models.URLField(max_length=80)
 
 
 class ProjectOwner(models.Model):
@@ -28,9 +28,9 @@ class ProjectOwner(models.Model):
 
 class Issue(models.Model):
     project = models.ForeignKey('Project')
-    name = models.CharField()
+    name = models.CharField(max_length=50)
     author = models.ForeignKey('User')
-    url = models.CharField() # or
+    url = models.URLField(max_length=80) # or
     # text = models.CharField() # or
 
 
@@ -46,9 +46,9 @@ class IssueDeveloper(models.Model):
 
 
 class Skill(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=30)
 
 class Level(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=20)
 
 
