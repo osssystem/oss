@@ -1,6 +1,6 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
-from models.py import Project
+from oss_main.models import Project
 
 def index(request):
     if request.method == 'GET':
