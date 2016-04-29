@@ -1,6 +1,6 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
-from models import Project
+from models.py import Project
 
 def index(request):
     if request.method == 'GET':
@@ -17,11 +17,11 @@ def index(request):
 
     return HttpResponse(status=405)
 
-def project(request,project_id):
+def project_view(request,project_id):
     if request.method == 'GET':
         try:
             project = Project.objects.get(id = project_id)
-            http = 'Project: '+Project.name+'<br> Link: '+Project.url
+            http = 'Project: '+project.name+'<br> Link: '+project.url
             HttpResponse(http)
 
         except Project.DoesNotExist:
