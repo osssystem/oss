@@ -6,7 +6,7 @@ from oss_main.models import Project
 def index(request):
     if request.method == 'GET':
         projects = Project.objects.all().reverse()[:9]
-        return render_to_response('oss_main/home.html', {'projects': projects})
+        return render_to_response('oss_main/index.html')
 
     return HttpResponse(status=405)
 
@@ -24,12 +24,16 @@ def project_view(request, project_id):
 
 def projects_list_view(request):
     if request.method == 'GET':
-            project = Project.objects.get_all()
-            http= ''
-            for item in project:
-                http = http+ item.id+' / '+item.name+' / '+item.url+'<br>'
+        projects = Project.objects.all()
 
-            HttpResponse(http)
+        # What's that?
+        # http= ''
+        # for item in project:
+        #     http = http+ item.id+' / '+item.name+' / '+item.url+'<br>'
+
+        return render_to_response('oss_main/projects.html', {
+                'projects': projects
+            })
 
 
 
