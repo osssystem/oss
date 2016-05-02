@@ -28,4 +28,17 @@ def project_view(request,project_id):
             raise Http404('Project not found')
 
 
+def projects_list_view(request):
+    if request.method == 'GET':
+            project = Project.objects.get_all()
+            http= ''
+            for item in project:
+                http = http+ item.id+' / '+item.name+' / '+item.url+'<br>'
 
+            HttpResponse(http)
+
+
+
+
+def developers_list_view(request):
+    pass
