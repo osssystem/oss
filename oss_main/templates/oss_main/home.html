@@ -38,12 +38,11 @@
   <body>
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
           <div class="container">
-              <div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html#">Oss</a></div>
+              <div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html#">OssSystem</a></div>
               <div class="collapse navbar-collapse">
                   <ul class="nav navbar-nav">
-                      <li class="active"><a href="index.html#">Projects</a></li>
-                      <li><a href="index.html#about">Developers</a></li>
-                      <li><a href="index.html#contact">Contact</a></li>
+                      <li class="active"><a href="index.html#">Home</a></li>
+                      <li><a href="index.html#about">Valex's menu</a></li>
                   </ul>
                   <form class="form-inline text-right" role="form">
                       <div class="form-group">
@@ -67,7 +66,7 @@
       <br>
       <div class="container">
           <div class="starter-template">
-              <h1>Open Source Search&nbsp;</h1>
+              <h1><b>S</b>earch <b>O</b>pen <b>S</b>ource &nbsp;</h1>
               <form class="form-inline" role="form">
                   <div class="form-group">
                       <label class="sr-only" for="exampleInputEmail2">Email address</label>
@@ -80,12 +79,18 @@
                   <input type="text" class="form-control" id="inputSuccess2">
               </div>
               <div class="form-group has-success has-feedback">
+                  <div class="col-md-9"></div>
+                  <div class="col-md-3"><a href="#">Log in for advanced search</a></div>
+              </div>
+              <div class="form-group has-success has-feedback">
                   <div class="col-md-4">
-                      New projects<br>
-                      <br>
-                      <a href="#">
-                          Python anyware<br>
-                      </a>
+                      Newest projects<br>
+                      {% for project in projects %}
+                          <br>
+                          <a href="{{ project.url }}">
+                              {{ project.name }}<br>
+                          </a>
+                      {% endfor %}
                   </div>
               </div>
               <div class="col-md-4">
