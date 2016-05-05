@@ -5,5 +5,41 @@
 {% block content %}
 {{ request }}
     <h1>Welcome to open source search!</h1>
+    <div class="form-group has-success has-feedback">
+        <input type="text" class="form-control" id="inputSuccess2">
+    </div>
+    <div class="form-group has-success has-feedback">
+        <div class="col-md-9"></div>
+        <div class="col-md-3"><a href="#">Log in for advanced search</a></div>
+    </div>
+    <div class="form-group has-success has-feedback">
+        <div class="col-md-4">
+            Newest projects<br>
+            {% for project in projects %}
+                <br>
+                <a href="{{ project.url }}">
+                    {{ project.name }}<br>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-4">
+        Most serach tags<br>
+        <br>
+        <a href="#">
+            PHP<br>
+        </a><a href="#">
+        Flask<br>
+    </a>
+    </div>
+    <div class="col-md-4">
+        Credits<br>
+        <br>
+        <a href="#">
+            Valex<br>
+        </a><a href="#">
+        Kirill<br>
+    </a>
+    </div>
 
 {% endblock content %}

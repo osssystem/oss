@@ -6,7 +6,7 @@ from oss_main.models import Project
 def index(request):
     if request.method == 'GET':
         projects = Project.objects.all().reverse()[:9]
-        return render_to_response('oss_main/index.html')
+        return render_to_response('oss_main/index.html', projects)
 
     return HttpResponse(status=405)
 
