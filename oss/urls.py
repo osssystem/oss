@@ -17,9 +17,10 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from oss_main import urls as main_oss_urls
+from auth_app import urls as auth_app_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-
+    url(r'^users/', include(auth_app_urls, namespace='auth_app')),
     url(r'^', include(main_oss_urls, namespace='oss_main')),
 ]
