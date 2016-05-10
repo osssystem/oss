@@ -9,6 +9,9 @@ class User(models.Model):
     password = models.CharField(max_length=80)
     login_name = models.CharField(max_length=30)
 
+    def __unicode__(self):
+        return unicode(self.name)
+
 
 class UserSkill(models.Model):
     user = models.ForeignKey('User')
@@ -20,6 +23,8 @@ class Project(models.Model):
     name = models.CharField(max_length=30)
     url = models.URLField(max_length=80)
 
+    def __unicode__(self):
+        return unicode(self.name)
 
 class ProjectOwner(models.Model):
     project = models.ForeignKey('Project')
@@ -33,6 +38,8 @@ class Issue(models.Model):
     url = models.URLField(max_length=80) # or
     # text = models.CharField() # or
 
+    def __unicode__(self):
+        return unicode(self.name)
 
 class IssueSkill(models.Model):
     issue = models.ForeignKey('Issue')
@@ -48,7 +55,13 @@ class IssueDeveloper(models.Model):
 class Skill(models.Model):
     name = models.CharField(max_length=30)
 
+    def __unicode__(self):
+        return unicode(self.name)
+
+
 class Level(models.Model):
     name = models.CharField(max_length=20)
 
+    def __unicode__(self):
+        return unicode(self.name)
 

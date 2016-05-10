@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'oss_main/_base.html' %}
 
-</body>
-</html>
+{% block title %}OSS: project page{% endblock title %}
+
+{% block content %}
+
+<h1>Project page</h1>
+
+{project.id}
+{project.name}
+{project.url}
+
+Issues:
+{% for item in issues %}
+    {item.name}/{item.author}/{item.url}
+{% endfor %}
+
+
+{% endblock content %}

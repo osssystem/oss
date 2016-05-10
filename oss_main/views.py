@@ -1,6 +1,6 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
-from oss_main.models import Project
+from oss_main.models import Project,Issue
 
 
 def index(request):
@@ -15,6 +15,7 @@ def project_view(request, project_id):
     if request.method == 'GET':
         try:
             project = Project.objects.get(id=project_id)
+            issues = Issue.objects.filter_by(project = project.id).all()
             http = 'Project: '+project.name+'<br> Link: '+project.url
             HttpResponse(http)
 
