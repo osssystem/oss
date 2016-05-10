@@ -35,11 +35,11 @@ admin.site.register(Project, ProjectModel)
 
 class ProjectOwnerModel(admin.ModelAdmin):
     def project_name(self, obj):
-        return obj.user.name
+        return obj.project.name
     project_name.short_description = 'Project'
 
     def owner_name(self, obj):
-        return obj.skill.name
+        return obj.owner.name
     owner_name.short_description = 'Owner'
 
     list_display = ('project_name', 'owner_name')
@@ -49,7 +49,7 @@ admin.site.register(ProjectOwner, ProjectOwnerModel)
 
 class IssueModel(admin.ModelAdmin):
     def project_name(self, obj):
-        return obj.user.name
+        return obj.project.name
     project_name.short_description = 'Project'
 
     def author_name(self, obj):
