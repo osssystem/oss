@@ -28,7 +28,7 @@
               <li><a href="{% url 'oss_main:projects' %}">Projects</a></li>
               <li><a href="#contact">Developers</a></li>
               <li><a href="#contact">EN</a></li>
-                  {% if user.is_anonymous %}
+                  {% if not user.is_authenticated %}
               <li><a href="{% url 'auth_app:login' %}">login</a></li>
               <li><a href="{% url 'auth_app:register' %}">register</a></li>
                   {% else %}
