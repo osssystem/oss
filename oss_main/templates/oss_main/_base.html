@@ -28,6 +28,13 @@
               <li><a href="{% url 'oss_main:projects' %}">Projects</a></li>
               <li><a href="#contact">Developers</a></li>
               <li><a href="#contact">EN</a></li>
+                  {% if not user.is_authenticated %}
+              <li><a href="{% url 'auth_app:login' %}">login</a></li>
+              <li><a href="{% url 'auth_app:register' %}">register</a></li>
+                  {% else %}
+              <li><a href="{% url 'auth_app:logout' %}">logout</a></li>
+                  {% endif %}
+              <li><a href="{% url 'auth_app:user_profile' %}">Current user: {{ user }}</a></li>
           </ul>
         </div>
       </div>
