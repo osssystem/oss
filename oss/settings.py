@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'social.apps.django_app.default',
 
     'oss_main',
+    'auth_app',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -52,6 +53,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # OAuth
 ]
 
 ROOT_URLCONF = 'oss.urls'
@@ -59,7 +61,8 @@ ROOT_URLCONF = 'oss.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['auth_app/templates',
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,6 +76,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'oss.wsgi.application'
 
@@ -130,6 +134,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'bower_components'),
 ]
 
+<<<<<<< HEAD
 AUTHENTICATION_BACKENDS = (
     'social.backends.open_id.OpenIdAuth',
     'social.backends.google.GoogleOpenId',
@@ -139,3 +144,9 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.yahoo.YahooOpenId',
     'django.contrib.auth.backends.ModelBackend',
 )
+=======
+AUTH_USER_MODEL = 'oss_main.User'
+LOGIN_URL = 'oss_main:index'
+LOGIN_REDIRECT_URL = '/'
+
+>>>>>>> 3a45c8c3e1a7bb5e308a171d04b9b926c5e4fbf0

@@ -3,8 +3,9 @@ from models import User, UserSkill, Project, ProjectOwner, Issue, IssueSkill, Is
 
 # Register your models here.
 
+
 class UserModel(admin.ModelAdmin):
-    list_display = ('name','surname','email','password', 'login_name' )
+    list_display = ('first_name', 'last_name', 'email', 'password', 'username')
 
 admin.site.register(User, UserModel)
 
@@ -28,18 +29,18 @@ admin.site.register(UserSkill, UserSkillModel)
 
 
 class ProjectModel(admin.ModelAdmin):
-    list_display = ('name', 'url' )
+    list_display = ('name', 'url')
 
 admin.site.register(Project, ProjectModel)
 
 
 class ProjectOwnerModel(admin.ModelAdmin):
     def project_name(self, obj):
-        return obj.user.name
+        return obj.project.name
     project_name.short_description = 'Project'
 
     def owner_name(self, obj):
-        return obj.skill.name
+        return obj.owner.name
     owner_name.short_description = 'Owner'
 
     list_display = ('project_name', 'owner_name')
@@ -49,13 +50,12 @@ admin.site.register(ProjectOwner, ProjectOwnerModel)
 
 class IssueModel(admin.ModelAdmin):
     def project_name(self, obj):
-        return obj.user.name
+        return obj.project.name
     project_name.short_description = 'Project'
 
     def author_name(self, obj):
         return obj.author.name
     author_name.short_description = 'Author'
-
 
     list_display = ('project_name', 'name', 'author_name', 'url')
 
