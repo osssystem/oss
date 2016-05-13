@@ -1,7 +1,7 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from oss_main.models import Project, Issue
+from oss_main.models import Project, Issue, User
 
 
 def index(request):
@@ -39,4 +39,16 @@ def projects_list_view(request):
 
 
 def developers_list_view(request):
-    pass
+    if request.method == 'GET':
+        developers = User.objects.all()
+        return render_to_response('oss_main/developer.html',
+                                  {'developers': developers},
+                                  RequestContext(request))
+
+
+def create_request(request):
+    if request.method == 'GET':
+        developers = User.objects.all()
+        return render_to_response('oss_main/request.html',
+                                  {'developers': developers},
+                                  RequestContext(request))
