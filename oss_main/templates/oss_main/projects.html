@@ -27,10 +27,10 @@
 
         {% for project in projects %}
         <tr>
-            <td>{project.id}</td>
-            <td>01.02.2016</td>
-            <td>{project.name}</td>
-            <td>{project.url}</td>
+            <td>{{ project.id }}</td>
+{#            <td>01.02.2016</td>#}
+            <td>{{ project.name }}</td>
+            <td><a href="{{ project.url }}">{{ project.url }}</a></td>
         </tr>
 
         {% endfor %}

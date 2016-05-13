@@ -19,6 +19,7 @@ class UserSkill(models.Model):
     user = models.ForeignKey('User')
     skill = models.ForeignKey('Skill')
     level = models.ForeignKey('Level')
+    # TODO: Make check duplicate entries for the same user skills
 
 
 class Project(models.Model):
