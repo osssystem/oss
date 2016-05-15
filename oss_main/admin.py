@@ -12,7 +12,7 @@ admin.site.register(User, UserModel)
 
 class UserSkillModel(admin.ModelAdmin):
     def user_name(self, obj):
-        return obj.user.name
+        return obj.user.username
     user_name.short_description = 'User'
 
     def skill_name(self, obj):
@@ -40,7 +40,7 @@ class ProjectOwnerModel(admin.ModelAdmin):
     project_name.short_description = 'Project'
 
     def owner_name(self, obj):
-        return obj.owner.name
+        return obj.owner.username
     owner_name.short_description = 'Owner'
 
     list_display = ('project_name', 'owner_name')
@@ -54,7 +54,7 @@ class IssueModel(admin.ModelAdmin):
     project_name.short_description = 'Project'
 
     def author_name(self, obj):
-        return obj.author.name
+        return obj.author.username
     author_name.short_description = 'Author'
 
     list_display = ('project_name', 'name', 'author_name', 'url')
@@ -86,7 +86,7 @@ class IssueDeveloperModel(admin.ModelAdmin):
     issue_name.short_description = 'Issue'
 
     def developer_name(self, obj):
-        return obj.developer.name
+        return obj.developer.username
     developer_name.short_description = 'Developer'
 
     list_display = ('issue_name', 'developer_name')

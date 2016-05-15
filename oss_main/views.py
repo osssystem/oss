@@ -7,7 +7,9 @@ from oss_main.models import Project, Issue
 def index(request):
     if request.method == 'GET':
         projects = Project.objects.all().reverse()[:9]
-        return render_to_response('oss_main/index.html', RequestContext(request, projects))
+        return render_to_response('oss_main/index.html',
+                                  {'projects': projects},
+                                  RequestContext(request))
 
     return HttpResponse(status=405)
 
@@ -27,15 +29,13 @@ def project_view(request, project_id):
 def projects_list_view(request):
     if request.method == 'GET':
         projects = Project.objects.all()
-
         # What's that?
         # http= ''
         # for item in project:
         #     http = http+ item.id+' / '+item.name+' / '+item.url+'<br>'
-
-        return render_to_response('oss_main/projects.html', RequestContext(request, {
-                'projects': projects
-            }))
+        return render_to_response('oss_main/projects.html',
+                                  {'projects': projects},
+                                  RequestContext(request))
 
 
 def developers_list_view(request):
