@@ -9,7 +9,7 @@ class User(AbstractUser):
     # surname = models.CharField(max_length=30)
     # email = models.EmailField(max_length=40)
     # password = models.CharField(max_length=80)
-    git_url = models.URLField()
+    git_url = models.URLField(blank=True)
 
     def __unicode__(self):
         return unicode(self.username)

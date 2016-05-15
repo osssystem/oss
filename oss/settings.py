@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'social.apps.django_app.default',
-
     'oss_main',
     'auth_app',
 ]
@@ -53,7 +51,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # OAuth
 ]
 
 ROOT_URLCONF = 'oss.urls'
@@ -70,8 +67,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social.apps.django_app.context_processors.backends',
-                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -96,18 +91,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 
@@ -134,16 +129,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'bower_components'),
 ]
 
-AUTHENTICATION_BACKENDS = (
-    'social.backends.open_id.OpenIdAuth',
-    'social.backends.google.GoogleOpenId',
-    'social.backends.google.GoogleOAuth2',
-    'social.backends.google.GoogleOAuth',
-    'social.backends.twitter.TwitterOAuth',
-    'social.backends.yahoo.YahooOpenId',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
 AUTH_USER_MODEL = 'oss_main.User'
 LOGIN_URL = 'oss_main:index'
 LOGIN_REDIRECT_URL = '/'
+

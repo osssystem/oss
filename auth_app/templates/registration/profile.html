@@ -1,0 +1,30 @@
+{% extends 'oss_main/_base.html' %}
+
+{% block title %}OSS: profile{% endblock title %}
+
+{% block content %}
+
+    <h1>Welcome to your profile, master {{ request.user }}!</h1>
+
+    {%  if result %}
+        <p><em>{{ result }}</em></p>
+    {% endif %}
+
+    {%  if github_response %}
+        <strong>Founded repos:</strong>
+        <ul>
+        {%  for repo in github_response %}
+            <li>
+                <p><a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a><br>
+                {{ repo.description }}</p>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form action="{% url 'auth_app:user_profile' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" value="Check my github repos">
+    </form>
+
+{% endblock content %}

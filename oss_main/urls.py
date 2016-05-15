@@ -7,6 +7,4 @@ urlpatterns = [
     url(r'^projects', projects_list_view, name='projects'),
     url(r'^developers', developers_list_view, name='developers'),
     url(r'^request', create_request, name='request'),
-
-    url('', include('social.apps.django_app.urls', namespace='social'))
 ]
