@@ -25,6 +25,7 @@ class UserSkill(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=30)
     url = models.URLField()
+    description = models.CharField(max_length=120)
 
     def __unicode__(self):
         return unicode(self.name)
@@ -33,6 +34,9 @@ class Project(models.Model):
 class ProjectOwner(models.Model):
     project = models.ForeignKey('Project')
     owner = models.ForeignKey('User')
+
+    def __unicode__(self):
+        return "%s own by %s" %(unicode(self.project), unicode(self.owner))
 
 
 class Issue(models.Model):

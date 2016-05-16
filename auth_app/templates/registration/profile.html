@@ -6,14 +6,26 @@
 
     <h1>Welcome to your profile, master {{ request.user }}!</h1>
 
-    {%  if result %}
-        <p><em>{{ result }}</em></p>
+    {% if projects %}
+        <strong>Your current github projects:</strong>
+        <ul>
+        {%  for project in projects %}
+            <li>
+                <p><a href="{{ project.url }}" target="_blank">{{ project.name }}</a><br>
+                {{ project.description }}</p>
+            </li>
+        {% endfor %}
+        </ul>
     {% endif %}
 
-    {%  if github_response %}
-        <strong>Founded repos:</strong>
+    {%  if api_result %}
+        <p><em>{{ api_result }}</em></p>
+    {% endif %}
+
+    {%  if saved_projects %}
+        <strong>Newly founded repos:</strong>
         <ul>
-        {%  for repo in github_response %}
+        {%  for repo in saved_projects %}
             <li>
                 <p><a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a><br>
                 {{ repo.description }}</p>
