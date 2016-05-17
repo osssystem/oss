@@ -39,6 +39,8 @@ def profile(request):
     if not request.user.is_authenticated():
         raise Http404("No such page.")
 
+    print(request.user.get_short_name())
+
     form = ProfileForm()
     api_result = None
 
@@ -48,59 +50,57 @@ def profile(request):
     # Initialize current context with projects
     current_context = {"projects": current_projects, }
 
-    # If we click on our button
-    if request.method == 'POST':
-        r = requests.get(
-            "https://api.github.com/users/{user}/repos".format(
-                user=request.user),
-        )
+    r = requests.get(
+        "https://api.github.com/users/{user}/repos".format(
+            user=request.user),
+    )
 
-        # If we successfully connected to current user github
-        if r.status_code == 200:
-            api_result = "Successfully connected to github!"
+    # If we successfully connected to current user github
+    if r.status_code == 200:
+        api_result = "Successfully connected to github!"
 
-            github_result = json.loads(r.content)
+        github_result = json.loads(r.content)
 
-            # Here we will accumulate newly created projects
-            saved_projects = []
+        # Here we will accumulate newly created projects
+        saved_projects = []
 
-            for project in github_result:
-                # Get all current project names
-                current_projects_names = [obj.name for obj in current_projects]
+        for project in github_result:
+            # Get all current project names
+            current_projects_names = [obj.name for obj in current_projects]
 
-                if project['name'] in current_projects_names:
-                    continue
+            if project['name'] in current_projects_names:
+                continue
 
-                # Save project in DB
-                with transaction.atomic():
-                    new_project = Project(
-                        name=project['name'],
-                        url=project['html_url'],
-                        description=project['description']
-                    )
-                    new_project.save()
+            # Save project in DB
+            with transaction.atomic():
+                new_project = Project(
+                    name=project['name'],
+                    url=project['html_url'],
+                    description=project['description']
+                )
+                new_project.save()
 
-                    owner = ProjectOwner(
-                        project=new_project,
-                        owner=request.user
-                    )
-                    owner.save()
+                owner = ProjectOwner(
+                    project=new_project,
+                    owner=request.user
+                )
+                owner.save()
 
-                    saved_projects.append(new_project)
+                saved_projects.append(new_project)
 
-            # If we got some new projects
-            if len(saved_projects) > 0:
-                api_result += " %s new project added!" % len(saved_projects)
-                current_context.update({
-                    'saved_projects': saved_projects,
-                })
-            else:
-                api_result += " But there are no new projects here!"
+        # If we got some new projects
+        if len(saved_projects) > 0:
+            api_result += " %s new project added!" % len(saved_projects)
+            current_context.update({
+                'saved_projects': saved_projects,
+            })
         else:
-            # If we can't find repos of current user in github by name
-            api_result = "Something went wrong with connection to github repo. "\
-                      "Response status for user '{0}' is {1}.".format(
-                        request.user, r.status_code)
+            api_result += " But there are no new projects here!"
+    else:
+        # If we can't find repos of current user in github by name
+        api_result = "Something went wrong with connection to github repo. "\
+                  "Response status for user '{0}' is {1}.".format(
+                    request.user, r.status_code)
 
     current_context.update({
         'form': form,

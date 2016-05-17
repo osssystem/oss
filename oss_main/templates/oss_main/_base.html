@@ -36,6 +36,7 @@
           <ul class="nav navbar-nav navbar-right">
               {% if not user.is_authenticated %}
                   <li><a href="{% url 'auth_app:login' %}">login</a></li>
+              <li><a href="{% url 'social:begin' 'github' %}?next={% url 'auth_app:user_profile' %}">login with GitHub</a></li>
                   <li><a href="{% url 'auth_app:register' %}">register</a></li>
               {% else %}
                   <li><a href="{% url 'auth_app:user_profile' %}">Current user: {{ user }}</a></li>
