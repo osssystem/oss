@@ -36,7 +36,7 @@ class ProjectOwner(models.Model):
     owner = models.ForeignKey('User')
 
     def __unicode__(self):
-        return "%s own by %s" %(unicode(self.project), unicode(self.owner))
+        return "%s own by %s" % (unicode(self.project), unicode(self.owner))
 
 
 class Issue(models.Model):

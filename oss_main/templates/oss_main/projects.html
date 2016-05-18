@@ -20,17 +20,19 @@
             <th>#</th>
             <th>Project name</th>
             <th>Project URL</th>
-{#            <th>Short description</th>#}
+            <th>Project Description</th>
+            <th>Project Owner</th>
         </tr>
         </thead>
         <tbody>
 
         {% for project in projects %}
         <tr>
-            <td>{{ project.id }}</td>
-{#            <td>01.02.2016</td>#}
-            <td>{{ project.name }}</td>
-            <td><a href="{{ project.url }}">{{ project.url }}</a></td>
+            <td>{{ project.project.id }}</td>
+            <td>{{ project.project.name }}</td>
+            <td><a href="{{ project.project.url }}">{{ project.project.url }}</a></td>
+            <td>{{ project.project.description }}</td>
+            <td><a href="{{ project.owner.git_url }}">{{ project.owner.username }}</a></td>
         </tr>
 
         {% endfor %}

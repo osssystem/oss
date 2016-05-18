@@ -1,7 +1,7 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from oss_main.models import Project, Issue, User
+from oss_main.models import Project, ProjectOwner, Issue, User
 
 
 def index(request):
@@ -28,11 +28,14 @@ def project_view(request, project_id):
 
 def projects_list_view(request):
     if request.method == 'GET':
-        projects = Project.objects.all()
-        # What's that?
-        # http= ''
-        # for item in project:
-        #     http = http+ item.id+' / '+item.name+' / '+item.url+'<br>'
+        # projects = Project.objects.all()
+        projects = ProjectOwner.objects.select_related(
+            'owner__username',
+            'project__id',
+            'project__name',
+            'project__url',
+            'project__description',
+        ).all()
         return render_to_response('oss_main/projects.html',
                                   {'projects': projects},
                                   RequestContext(request))
