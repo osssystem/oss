@@ -5,15 +5,53 @@
 {% block content %}
 
 <h1>Project page</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>{{ project.project.id }}</th>
+        </tr>
+        <tr>
+            <th>Project name</th>
+            <th>{{ project.project.name }}</th>
+        </tr>
+        <tr>
+            <th>Project URL</th>
+            <th>{{ project.project.url }}</th>
+        </tr>
+        <tr>
+            <th>Project Description</th>
+            <th>{{ project.project.description }}</th>
+        </tr>
+        <tr>
+            <th>Project Owner</th>
+            <th>{{ project.owner.username }}</th>
+        </tr>
+    </table>
+    <h3>Issues</h3>
+    <table class="table table-striped">
+        <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>URL</th>
+            <th>Author</th>
+            <th>Requirements</th>
+        </thead>
+        <tbody>
 
-{project.id}
-{project.name}
-{project.url}
-
-Issues:
-{% for item in issues %}
-    {item.name}/{item.author}/{item.url}
-{% endfor %}
-
+    {% for issue in issues %}
+        <tr>
+            <td>{{ issue.id }}</td>
+            <td><a href="">{{ issue.name }}</a></td>
+            <td><a href="{{ issue.url }}">{{ issue.url }}</a></td>
+            <td>{{ issue.author.username }}</td>
+            <td>
+                {% for skill, level in issue.issueskill.items %}
+                    {{ skill }}: {{ level }}<br>
+                {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock content %}

@@ -17,7 +17,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>#</th>
+            <th>ID</th>
             <th>Project name</th>
             <th>Project URL</th>
             <th>Project Description</th>
@@ -29,7 +29,7 @@
         {% for project in projects %}
         <tr>
             <td>{{ project.project.id }}</td>
-            <td>{{ project.project.name }}</td>
+            <td><a href="{% url 'oss_main:project_page' project.project.id  %}">{{ project.project.name }}</a></td>
             <td><a href="{{ project.project.url }}">{{ project.project.url }}</a></td>
             <td>{{ project.project.description }}</td>
             <td><a href="{{ project.owner.git_url }}">{{ project.owner.username }}</a></td>
