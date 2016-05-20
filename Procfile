@@ -1,1 +1,1 @@
-web: gunicorn oss.oss.wsgi --log-file -
+web: gunicorn oss.wsgi --log-file -
