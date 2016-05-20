@@ -21,6 +21,7 @@
             <th>Developer name</th>
             <th>Developer login</th>
             <th>Developer Github link</th>
+            <th>Skills</th>
         </tr>
         </thead>
         <tbody>
@@ -28,9 +29,10 @@
         {% for dev in developers %}
         <tr>
             <td>{{ dev.id }}</td>
-            <td>{{ dev.last_name  }}</td>
+            <td>{{ dev.first_name  }} {{ dev.last_name  }}</td>
             <td>{{ dev.username }}</td>
             <td><a href="{{ dev.git_url }}">{{ dev.git_url }}</a></td>
+            <td>{{ dev.skills }}</td>
         </tr>
 
         {% endfor %}

@@ -1,7 +1,7 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from oss_main.models import Project, ProjectOwner, Issue, User
+from oss_main.models import Project, ProjectOwner, Issue, User, UserSkill
 
 
 def index(request):
@@ -28,7 +28,7 @@ def project_view(request, project_id):
                 'issueskill_set__level',
                 'issueskill_set__skill',
                 ).all()
-            # TODO: need butifull query ))
+            # TODO: need beautiful query ))
 
             for issue in issues:
                 setattr(issue, 'issueskill', {})
@@ -63,6 +63,12 @@ def projects_list_view(request):
 def developers_list_view(request):
     if request.method == 'GET':
         developers = User.objects.all()
+        for dev in developers:
+            skills_obj = UserSkill.objects.filter(user__id=dev.pk).select_related('skill__name','level__name')
+            skills = ''
+            for sk in skills_obj:
+                skills += sk.skill.name+'('+sk.level.name+'), '
+            dev.skills = skills[:-2]
         return render_to_response('oss_main/developer.html',
                                   {'developers': developers},
                                   RequestContext(request))

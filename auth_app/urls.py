@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
-from django.contrib.auth.views import login, logout, logout_then_login
+from django.contrib.auth.views import login, logout
 
-from auth_app.views import register, profile
+from auth_app.views import register, profile, get_user_info
 
 urlpatterns = [
     url(r'^login/', login,
@@ -16,4 +16,6 @@ urlpatterns = [
     # temp index
     url(r'^user_profile', profile, name='user_profile'),
     url(r'^register', register, name='register'),
+    url(r'^get_user_info', get_user_info, name='get_user_info'),
+
 ]

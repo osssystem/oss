@@ -10,7 +10,7 @@ from django.db import transaction
 from django.http import Http404
 
 from auth_app.forms import RegisterForm, ProfileForm
-from oss_main.models import Project, ProjectOwner
+from oss_main.models import Project, ProjectOwner, User
 
 
 def register(request):
@@ -35,11 +35,21 @@ def register(request):
     return render_to_response('registration/register.html', c)
 
 
-def profile(request):
+def get_user_info(request):
     if not request.user.is_authenticated():
         raise Http404("No such page.")
 
-    print(request.user.get_short_name())
+    current_user = User.objects.filter(username=request.user)[0]
+    current_user.git_url = "https://github.com/{user}/".format(
+            user=request.user)
+    current_user.save()
+
+    return redirect(reverse('auth_app:user_profile'))
+
+
+def profile(request):
+    if not request.user.is_authenticated():
+        raise Http404("No such page.")
 
     form = ProfileForm()
     api_result = None
@@ -106,6 +116,7 @@ def profile(request):
         'form': form,
         'api_result': api_result,
     })
+
     c = RequestContext(request, current_context)
 
     return render_to_response('registration/profile.html', c)
