@@ -55,7 +55,7 @@ def profile(request):
     api_result = None
 
     # Get all projects for current user
-    current_projects = Project.objects.filter(projectowner__owner=request.user)
+    current_projects = Project.objects.filter(owner__owner=request.user)
 
     # Initialize current context with projects
     current_context = {"projects": current_projects, }
