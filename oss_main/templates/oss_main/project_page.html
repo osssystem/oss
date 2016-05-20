@@ -54,4 +54,9 @@
         </tbody>
     </table>
 
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" value="Check my github repos">
+    </form>
+
 {% endblock content %}

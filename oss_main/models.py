@@ -32,8 +32,8 @@ class Project(models.Model):
 
 
 class ProjectOwner(models.Model):
-    project = models.ForeignKey('Project')
-    owner = models.ForeignKey('User')
+    project = models.ForeignKey('Project', related_name='owner')
+    owner = models.ForeignKey('User', related_name='owner')
 
     def __unicode__(self):
         return "%s own by %s" % (unicode(self.project), unicode(self.owner))
@@ -44,6 +44,7 @@ class Issue(models.Model):
     name = models.CharField(max_length=50)
     author = models.ForeignKey('User')
     url = models.URLField()
+    github_id = models.IntegerField(null=True)
     # or
     # text = models.CharField() # or
 
