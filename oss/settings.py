@@ -141,6 +141,7 @@ LOGIN_URL = 'oss_main:index'
 LOGIN_REDIRECT_URL = '/'
 
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
     'social.backends.github.GithubOAuth2',
 )
 
