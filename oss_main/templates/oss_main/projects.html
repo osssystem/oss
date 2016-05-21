@@ -4,11 +4,15 @@
 
 {% block content %}
 <div class="form-group has-success has-feedback">
-    <form class="form-inline" role="form">
-        <div class="form-group">
-            <input type="text" class="form-control" id="exampleInputEmail2">
-        </div>
-        <button type="submit" class="btn btn-default">Search</button>
+{#    <form class="form-inline" role="form">#}
+{#        <div class="form-group">#}
+{#            <input type="text" class="form-control" id="exampleInputEmail2">#}
+{#        </div>#}
+{#        <button type="submit" class="btn btn-default">Search</button>#}
+{#    </form>#}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" value="View projects for my skills">
     </form>
 </div>
 <h1>Available projects</h1>

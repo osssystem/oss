@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.forms import Form
 import requests
 import json
-from oss_main.models import Project, ProjectOwner, Issue, User, UserSkill
+from oss_main.models import Project, ProjectOwner, Issue, User, UserSkill, IssueSkill
 
 
 def index(request):
@@ -18,7 +18,7 @@ def index(request):
 
 
 def project_view(request, project_id):
-    if request.method in ['GET','POST']:
+    if request.method in ['GET', 'POST']:
         try:
             form = Form()
             project = ProjectOwner.objects.filter(project_id=project_id).select_related('owner__username', 'project__name')[0]
@@ -52,8 +52,6 @@ def project_view(request, project_id):
                             github_id = item['id']
                         )
                         new_issue.save()
-
-
                 else:
                     # If we can't find repos of current user in github by name
                     api_result = "Something went wrong with connection to github repo. "\
@@ -87,25 +85,40 @@ def project_view(request, project_id):
 
 
 def projects_list_view(request):
-    if request.method == 'GET':
-        # projects = Project.objects.all()
-        projects = ProjectOwner.objects.select_related(
-            'owner__username',
-            'project__id',
-            'project__name',
-            'project__url',
-            'project__description',
-        ).all()
-        return render_to_response('oss_main/projects.html',
-                                  {'projects': projects},
-                                  RequestContext(request))
+    if request.method in ['GET', 'POST']:
+        if request.method == 'GET':
+            projects = ProjectOwner.objects.select_related().all()
+            return render_to_response('oss_main/projects.html',
+                                      {'projects': projects},
+                                      RequestContext(request))
+
+        elif request.method == 'POST':
+            try:
+                skills = UserSkill.objects.filter(user=request.user.id)
+                search_result = []
+                for skill in skills:
+                    projects_temp = IssueSkill.objects.filter(
+                        skill_id=skill.skill_id,
+                        level_id=skill.level_id,).values('issue__project_id')
+
+                    for item in projects_temp:
+                        if item['issue__project_id'] not in search_result:
+                            search_result.append(item['issue__project_id'])
+
+                projects = ProjectOwner.objects.select_related().filter(project_id__in=search_result)
+                return render_to_response('oss_main/projects.html',
+                                          {'projects': projects},
+                                          RequestContext(request))
+
+            except UserSkill.DoesNotExist:
+                raise Http404('Skills not found')
 
 
 def developers_list_view(request):
     if request.method == 'GET':
         developers = User.objects.all()
         for dev in developers:
-            skills_obj = UserSkill.objects.filter(user__id=dev.pk).select_related('skill__name','level__name')
+            skills_obj = UserSkill.objects.filter(user__id=dev.pk).select_related('skill__name', 'level__name')
             skills = ''
             for sk in skills_obj:
                 skills += sk.skill.name+'('+sk.level.name+'), '
