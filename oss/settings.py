@@ -23,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'd0at*m2!c3cx7qundwo&=x!vipnj#39hv096m2=q@lls#4on%b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-#ALLOWED_HOSTS = ['open-source-search.herokuapp.com']
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['open-source-search.herokuapp.com']
 
 
 # Application definition
