@@ -26,17 +26,27 @@
             <th>Project URL</th>
             <th>Project Description</th>
             <th>Project Owner</th>
+            <th>Project Skills</th>
         </tr>
         </thead>
         <tbody>
 
         {% for project in projects %}
         <tr>
-            <td>{{ project.project.id }}</td>
-            <td><a href="{% url 'oss_main:project_page' project.project.id  %}">{{ project.project.name }}</a></td>
-            <td><a href="{{ project.project.url }}">{{ project.project.url }}</a></td>
-            <td>{{ project.project.description }}</td>
-            <td><a href="{{ project.owner.git_url }}">{{ project.owner.username }}</a></td>
+            <td>{{ project.id }}</td>
+            <td><a href="{% url 'oss_main:project_page' project.id  %}">{{ project.name }}</a></td>
+            <td><a href="{{ project.url }}">{{ project.url }}</a></td>
+            <td>{{ project.description }}</td>
+            <td>
+                {% for username, git_url in project.owners.items %}
+                    <a href="{{ git_url }}">{{ username }}</a><br>
+                {% endfor %}
+                </td>
+            <td>
+                {% for skill, level in project.projectskills.items %}
+                    {{ skill }}: {{ level }}<br>
+                {% endfor %}
+            </td>
         </tr>
 
         {% endfor %}
