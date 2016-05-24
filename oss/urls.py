@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+import settings
 
 from oss_main import urls as main_oss_urls
 from auth_app import urls as auth_app_urls
@@ -25,4 +26,5 @@ urlpatterns = [
     url(r'^', include(main_oss_urls, namespace='oss_main')),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url('', include('django.contrib.auth.urls', namespace='auth')),
+    url(r'^staticfiles/(.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
 ]
