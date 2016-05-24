@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'social.apps.django_app.default',
     'oss_main',
     'auth_app',
+    'django_coverage',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -155,3 +156,5 @@ AUTHENTICATION_BACKENDS = (
 
 SOCIAL_AUTH_GITHUB_KEY = 'dd7c9d276713904b5657'
 SOCIAL_AUTH_GITHUB_SECRET = 'bfaeed960a0350058f2effeadefc3c4652e4299c'
+
+COVERAGE_REPORT_HTML_OUTPUT_DIR = os.path.join(BASE_DIR, 'cover')
