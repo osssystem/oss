@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.forms import Form
 import requests
 import json
-from oss_main.models import Project, ProjectOwner, Issue, User, UserSkill, IssueSkill
+from oss_main.models import Project, Issue, User, UserSkill, IssueSkill
 
 
 def index(request):
@@ -21,8 +21,11 @@ def project_view(request, project_id):
     if request.method in ['GET', 'POST']:
         try:
             form = Form()
-            project = ProjectOwner.objects.filter(project_id=project_id).select_related('owner__username', 'project__name')[0]
-            # TODO: I will think about it. Create query to Project model like issues
+
+            project = Project.objects.prefetch_related('owner__owner').get(id=project_id)
+            setattr(project, 'owners', {})
+            for item in project._prefetched_objects_cache['owner']:
+                project.owners[item._owner_cache.username] = item._owner_cache.git_url
 
             if request.method == 'POST':
                 issues = Issue.objects.filter(project=project_id).all()
@@ -66,7 +69,7 @@ def project_view(request, project_id):
                 'issueskill_set__level',
                 'issueskill_set__skill',
                 ).all()
-            # TODO: need beautiful query ))
+
             for issue in issues:
                 setattr(issue, 'issueskill', {})
                 for item in issue._prefetched_objects_cache:
