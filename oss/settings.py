@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -52,7 +53,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'oss.urls'
@@ -139,10 +139,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'bower_components'),
 ]
 
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 AUTH_USER_MODEL = 'oss_main.User'
 LOGIN_URL = 'oss_main:index'
