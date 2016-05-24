@@ -136,9 +136,14 @@ STATIC_URL = '/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'staticfiles'),
 #    os.path.join(BASE_DIR, 'bower_components'),
 ]
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
 AUTH_USER_MODEL = 'oss_main.User'
 LOGIN_URL = 'oss_main:index'

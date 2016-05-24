@@ -26,5 +26,4 @@ urlpatterns = [
     url(r'^', include(main_oss_urls, namespace='oss_main')),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url('', include('django.contrib.auth.urls', namespace='auth')),
-    url(r'^staticfiles/(.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
 ]
