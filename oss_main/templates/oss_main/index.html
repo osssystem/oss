@@ -5,21 +5,24 @@
 {% block content %}
 {#{{ request }}#}
     <h1>Welcome to open source search!</h1>
+{#    <div class="form-group has-success has-feedback">#}
+{#        <input type="text" class="form-control" id="inputSuccess2">#}
+{#    </div>#}
+{#    <div class="form-group has-success has-feedback">#}
+{#        <div class="col-md-9"></div>#}
+{#        <div class="col-md-3"><a href="#">Log in for advanced search</a></div>#}
+{#    </div>#}
     <div class="form-group has-success has-feedback">
-        <input type="text" class="form-control" id="inputSuccess2">
-    </div>
-    <div class="form-group has-success has-feedback">
-        <div class="col-md-9"></div>
-        <div class="col-md-3"><a href="#">Log in for advanced search</a></div>
-    </div>
-    <div class="form-group has-success has-feedback">
-        <div class="col-md-4">
-            Newest projects<br>
+        <div class="col-md-12">
+            <h3>Newest projects<h3>
+        </div>
+        <div class="col-md-12">
             {% for project in projects %}
-                <br>
-                <a href="{{ project.url }}">
-                    {{ project.name }}<br>
-                </a>
+                <div class="col-md-4">
+                    <a href="{{ project.url }}" class="btn btn-default btn-lg btn-block">
+                        {{ project.name }}
+                    </a>
+                </div>
             {% endfor %}
         </div>
     </div>

@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.forms import Form
 import requests
 import json
-from oss_main.models import Project, ProjectOwner, Issue, User, UserSkill, IssueSkill
+from oss_main.models import Project, Issue, User, UserSkill, IssueSkill
 
 
 def index(request):
@@ -21,8 +21,11 @@ def project_view(request, project_id):
     if request.method in ['GET', 'POST']:
         try:
             form = Form()
-            project = ProjectOwner.objects.filter(project_id=project_id).select_related('owner__username', 'project__name')[0]
-            # TODO: I will think about it. Create query to Project model like issues
+
+            project = Project.objects.prefetch_related('owner__owner').get(id=project_id)
+            setattr(project, 'owners', {})
+            for item in project._prefetched_objects_cache['owner']:
+                project.owners[item._owner_cache.username] = item._owner_cache.git_url
 
             if request.method == 'POST':
                 issues = Issue.objects.filter(project=project_id).all()
@@ -66,7 +69,6 @@ def project_view(request, project_id):
                 'issueskill_set__level',
                 'issueskill_set__skill',
                 ).all()
-            # TODO: need beautiful query ))
 
             for issue in issues:
                 setattr(issue, 'issueskill', {})
@@ -87,7 +89,23 @@ def project_view(request, project_id):
 def projects_list_view(request):
     if request.method in ['GET', 'POST']:
         if request.method == 'GET':
-            projects = ProjectOwner.objects.select_related().all()
+            projects = Project.objects.prefetch_related(
+                'issue_set__issueskill_set__skill',
+                'issue_set__issueskill_set__level',
+                'owner__owner',
+            ).all()
+
+            for project in projects:
+                setattr(project, 'projectskills', {})
+                for item in project._prefetched_objects_cache['issue']:
+                    for skills in item._prefetched_objects_cache['issueskill']:
+                        project.projectskills[skills.skill.name] = skills.level.name
+
+            for project in projects:
+                setattr(project, 'owners', {})
+                for item in project._prefetched_objects_cache['owner']:
+                    project.owners[item._owner_cache.username] = item._owner_cache.git_url
+
             return render_to_response('oss_main/projects.html',
                                       {'projects': projects},
                                       RequestContext(request))
@@ -99,13 +117,30 @@ def projects_list_view(request):
                 for skill in skills:
                     projects_temp = IssueSkill.objects.filter(
                         skill_id=skill.skill_id,
-                        level_id=skill.level_id,).values('issue__project_id')
+                        level_id__in=[skill.level_id, str(skill.level_id+1)],).values('issue__project_id')
 
                     for item in projects_temp:
                         if item['issue__project_id'] not in search_result:
                             search_result.append(item['issue__project_id'])
 
-                projects = ProjectOwner.objects.select_related().filter(project_id__in=search_result)
+                projects = Project.objects.filter(
+                    id__in=search_result).prefetch_related(
+                    'issue_set__issueskill_set__skill',
+                    'issue_set__issueskill_set__level',
+                    'owner__owner',
+                )
+
+                for project in projects:
+                    setattr(project, 'projectskills', {})
+                    for item in project._prefetched_objects_cache['issue']:
+                        for skills in item._prefetched_objects_cache['issueskill']:
+                            project.projectskills[skills.skill.name] = skills.level.name
+
+                for project in projects:
+                    setattr(project, 'owners', {})
+                    for item in project._prefetched_objects_cache['owner']:
+                        project.owners[item._owner_cache.git_url] = item._owner_cache.username
+
                 return render_to_response('oss_main/projects.html',
                                           {'projects': projects},
                                           RequestContext(request))

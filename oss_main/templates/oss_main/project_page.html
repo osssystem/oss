@@ -8,23 +8,27 @@
     <table class="table table-striped">
         <tr>
             <th>ID</th>
-            <th>{{ project.project.id }}</th>
+            <th>{{ project.id }}</th>
         </tr>
         <tr>
             <th>Project name</th>
-            <th>{{ project.project.name }}</th>
+            <th>{{ project.name }}</th>
         </tr>
         <tr>
             <th>Project URL</th>
-            <th>{{ project.project.url }}</th>
+            <th><a href="{{ project.url }}">{{ project.url }}</a></th>
         </tr>
         <tr>
             <th>Project Description</th>
-            <th>{{ project.project.description }}</th>
+            <th>{{ project.description }}</th>
         </tr>
         <tr>
             <th>Project Owner</th>
-            <th>{{ project.owner.username }}</th>
+            <th>
+                {% for username, git_url in project.owners.items %}
+                    <a href="{{ git_url }}">{{ username }}</a><br>
+                {% endfor %}
+            </th>
         </tr>
     </table>
     <h3>Issues</h3>
