@@ -34,6 +34,7 @@ def project_view(request, project_id):
 
                     r = requests.get('https://api.github.com/repos/' +
                                      str(request.user)+'/'+project.name+'/issues?status=open')
+                    
 
                     # If we successfully connected to current user github
                     if r.status_code == 200:
